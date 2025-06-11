@@ -89,7 +89,8 @@ async def add_JobRole(request: JobRole, db: db_dependency):
         CompanyName = request.CompanyName,
         JobTitle = request.JobTitle,
         JobDescription = request.JobDescription,
-        StartDate = request.StartDate)
+        StartDate = request.StartDate
+    )
 
     db.add(db_post)
     db.commit()
