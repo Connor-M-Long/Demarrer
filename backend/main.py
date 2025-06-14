@@ -8,9 +8,12 @@ from databaseConfig import engine, SessionLocal
 import dbSchema
 
 class StartUp(BaseModel):
-    name: str
-    description: str
+    Name: str
+    Description: str
+    Stage: str
     isRecruiting: bool
+    Founder: str
+    Field: str
 
 class JobRole(BaseModel):
     CompanyName: str
@@ -43,7 +46,6 @@ def get_db():
 db_dependency = Annotated[Session, Depends(get_db)]
 
 memory_db_startup = {"startup": []}
-
 memory_db_jobroles = {"jobroles": []}
 
 @app.get("/startups", response_model=None)
@@ -61,9 +63,12 @@ async def get_StartUps(db: db_dependency):
 async def add_StartUp(request: StartUp, db: db_dependency):
 
     db_post = dbSchema.startUpModel(
-        name = request.name,
-        description = request.description,
-        isRecruiting = request.isRecruiting)
+        Name = request.Name,
+        Description = request.Description,
+        isRecruiting = request.isRecruiting,
+        Stage=request.Stage,
+        Founder=request.Founder,
+        Field=request.Field)
 
     db.add(db_post)
     db.commit()
